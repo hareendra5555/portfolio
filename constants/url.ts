@@ -1,9 +1,9 @@
 import { env } from "@/env";
 
 export const FALLBACK_SITE_ORIGIN =
-  "https://hareendra5555.github.io/portfolio_aug_2026" as const;
+  "https://hareendra5555.github.io/portfolio" as const;
 
-export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "/portfolio_aug_2026";
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "/portfolio";
 
 export const getBaseUrl = () => {
   if (env.NODE_ENV !== "production") {

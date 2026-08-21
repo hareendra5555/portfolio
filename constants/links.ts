@@ -1,6 +1,6 @@
 export const GITHUB = {
   branch: "main",
-  repo: "portfolio_aug_2026",
+  repo: "portfolio",
   user: "hareendra5555",
 } as const;
 

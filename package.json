@@ -1,9 +1,9 @@
 {
-  "name": "portfolio-aug-2026",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "description": "Personal portfolio and static site for Hareendra Nerusu.",
-  "homepage": "https://hareendra5555.github.io/portfolio_aug_2026",
+  "homepage": "https://hareendra5555.github.io/portfolio",
   "license": "MIT",
   "author": {
     "name": "Hareendra Nerusu",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hareendra5555/portfolio_aug_2026.git"
+    "url": "git+https://github.com/hareendra5555/portfolio.git"
   },
   "type": "module",
   "scripts": {

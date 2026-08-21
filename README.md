@@ -1,4 +1,4 @@
-# portfolio_aug_2026
+# portfolio
 
 Personal site for **Hareendra Nerusu** — software engineer, backend / cloud / agentic AI.
 
@@ -12,7 +12,7 @@ Next.js 16 App Router, Tailwind v4, MDX content, statically exported and served 
 
 ```bash
 npm install
-npm run dev        # http://localhost:3000/portfolio_aug_2026/
+npm run dev        # http://localhost:3000/portfolio/
 ```
 
 ```bash
@@ -28,7 +28,7 @@ oxlint/oxfmt TypeScript config files need **Node 22.18 or newer**. On an older
 unaffected. CI installs the latest 22.x, so it passes there.
 
 `npm run dev` serves under the base path, so the root URL is
-`http://localhost:3000/portfolio_aug_2026/`, not `http://localhost:3000`.
+`http://localhost:3000/portfolio/`, not `http://localhost:3000`.
 
 ## Deploying to GitHub Pages
 
