@@ -3,6 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # The LeetCode streak and the GitHub contribution graph are snapshotted at
+  # build time, so the site has to rebuild to stay current. Offset from the
+  # hour because scheduled runs queue behind everyone else's :00 cron.
+  schedule:
+    - cron: "17 6 * * *"
   workflow_dispatch:
 
 # GITHUB_TOKEN needs write access to Pages, and id-token for the deploy step.

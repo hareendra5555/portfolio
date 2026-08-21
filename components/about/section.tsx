@@ -6,14 +6,17 @@ import {
   GitHubContributionsFallback,
 } from "@/components/about/github-contributions";
 import { IntroSection } from "@/components/about/intro-section";
+import { LeetCodeCard } from "@/components/about/leetcode-stats";
 import { AppLink } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Callout } from "@/components/ui/callout";
 import { LINK } from "@/constants/links";
 import { getGitHubContributions } from "@/lib/github/contributions";
+import { getLeetCodeStats } from "@/lib/leetcode/stats";
 
-const AboutSection = () => {
+const AboutSection = async () => {
   const contributions = getGitHubContributions();
+  const leetcode = await getLeetCodeStats();
 
   return (
     <IntroSection>
@@ -95,6 +98,7 @@ const AboutSection = () => {
           </div>
         </div>
       </Callout>
+      <LeetCodeCard stats={leetcode} />
     </IntroSection>
   );
 };
