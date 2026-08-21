@@ -1,0 +1,26 @@
+---
+slug: liquid-glass
+---
+
+## Overview
+
+Glass that refracts instead of blurring. A panel over content bends the edges passing behind it, and the amount of bend is tunable at runtime.
+
+## Approach
+
+The whole effect is one SVG filter chain:
+
+1. `feTurbulence` with `type="fractalNoise"` generates a smooth noise field. Different base frequencies on x and y stretch the distortion horizontally, which reads more like glass than like water.
+2. `feGaussianBlur` softens that noise so the displacement field is continuous rather than grainy.
+3. `feDisplacementMap` samples the red channel for horizontal offset and the green channel for vertical, pushing each source pixel accordingly.
+4. A final small blur hides the sampling artifacts at high displacement scales.
+
+A CSS custom property scales the displacement, so the same filter serves a subtle nav bar and a heavy hero panel.
+
+## Tech stack
+
+<TechStack items={["SVG", "CSS", "JavaScript"]} />
+
+## Notes
+
+The trap is `scale`. Above roughly 45 the displacement starts sampling outside the filter region and edges tear, so the filter needs a generous `x`/`y`/`width`/`height` region — 160% works.

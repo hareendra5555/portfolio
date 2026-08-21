@@ -1,0 +1,31 @@
+---
+slug: gatorides
+---
+
+## Overview
+
+A ride-sharing backend for a campus-sized area: riders post where they are going, drivers see nearby requests appear without refreshing, and both sides watch the match move on a map.
+
+## The problem
+
+Ride matching is a geospatial query over a moving dataset. Naive implementations re-scan every open request on every location ping, which is fine at ten users and quadratic pain at a thousand.
+
+## Approach
+
+The Go backend is deliberately stateless — any instance can serve any request, so scaling is a replica count. Open rides live in MongoDB behind a `2dsphere` index, which turns "drivers within 3km" into an index seek rather than a collection scan.
+
+Live position updates travel over WebSockets fanned out through Redis pub/sub, so a driver location reaches every subscriber watching that ride without instances needing to know about each other.
+
+## Wins
+
+- **30% lower match latency** versus the initial scan-based implementation.
+- Sub-200ms location updates end to end.
+- 100+ concurrent connections held on a single instance under load testing.
+
+## Tech stack
+
+<TechStack items={["Go", "MongoDB", "Redis", "WebSocket", "Docker"]} />
+
+## What is next
+
+Driver-side route batching, so one driver can accept two compatible requests without either rider ETA collapsing.

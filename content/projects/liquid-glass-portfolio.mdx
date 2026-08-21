@@ -1,0 +1,25 @@
+---
+slug: liquid-glass-portfolio
+---
+
+## Overview
+
+A Gotham-themed personal site where the glass is real optics rather than a blur — panels bend what sits behind them, and the city artwork is vector geometry rather than images.
+
+## The problem
+
+`backdrop-filter: blur()` is what most glassmorphism reduces to. Blur scatters light; it does not refract it. The result reads as frosted plastic, and it looks identical at every scroll position.
+
+## Approach
+
+An SVG filter chain does the work. `feTurbulence` generates fractal noise, a gaussian blur softens it into a smooth gradient field, and `feDisplacementMap` uses that field to push source pixels sideways. Because displacement is per-pixel and driven by the red and green channels of the noise, edges passing behind a panel visibly bend.
+
+The skyline, cathedral and searchlight artwork are single SVG paths using `fill-rule="evenodd"` — windows are holes punched in the building rather than separate elements — so an entire scene is a few hundred bytes and scales losslessly.
+
+## Tech stack
+
+<TechStack items={["SVG", "CSS", "JavaScript"]} />
+
+## Notes
+
+Two filter variants ship: a heavier one for large panels, and a tighter, higher-frequency one for the nav bar, where too much displacement makes text unreadable.

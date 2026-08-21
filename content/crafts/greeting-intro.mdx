@@ -1,0 +1,23 @@
+---
+slug: greeting-intro
+---
+
+## Overview
+
+The intro on this site home page: nine greetings flicker past at 180ms each, land on an avatar and a first name, then the whole thing flies into position as the page header and a curtain lifts.
+
+## Approach
+
+The handoff is a shared-layout animation. The avatar and the name in the centered intro carry the same `layoutId` as the avatar and name in the profile header, so Motion interpolates between the two positions instead of cross-fading — one element moving, not two elements swapping.
+
+Sequencing is plain timers rather than an animation library timeline, because the phases are coarse: cycle greetings, hold on the identity, then promote to profile. The backdrop exits upward on a separate delayed transition so the curtain lifts *after* the layout animation has committed.
+
+Body scroll is locked for the duration, and the whole sequence is skipped on repeat visits within a session (`sessionStorage`) and whenever `prefers-reduced-motion` is set.
+
+## Tech stack
+
+<TechStack items={["React", "TypeScript", "Motion"]} />
+
+## Notes
+
+The reduced-motion path is not a shorter animation — it is no animation. The profile renders in its final position on first paint.

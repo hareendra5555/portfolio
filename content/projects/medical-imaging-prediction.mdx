@@ -1,0 +1,30 @@
+---
+slug: medical-imaging-prediction
+---
+
+## Overview
+
+An inference service for medical imaging models — upload a scan, get a prediction and a confidence, with the exact model version that produced it recorded alongside the result.
+
+## The problem
+
+Research notebooks make predictions. They do not make *reproducible* predictions: six months later nobody can say which weights, which preprocessing, or which dataset split produced a given number.
+
+## Approach
+
+Datasets and model artifacts are versioned in S3 under content-addressed keys, and every inference response carries the artifact hash it used. Rolling back a bad model is changing a pointer, not redeploying the service.
+
+PyTorch handles inference behind FastAPI, with preprocessing pinned to the same code path used during training so train/serve skew stays out of the results.
+
+## Wins
+
+- Every prediction traceable to an exact model artifact and preprocessing revision.
+- Model rollback decoupled from application deploys.
+
+## Tech stack
+
+<TechStack items={["Python", "PyTorch", "FastAPI", "AWS", "Docker"]} />
+
+## What is next
+
+Batch inference endpoints, and drift monitoring on the input distribution rather than only on the outputs.

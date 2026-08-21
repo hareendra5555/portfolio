@@ -1,0 +1,23 @@
+---
+slug: hybrid-breast-cancer-detection
+---
+
+## Overview
+
+Published in IJSREM, July 2023. A comparison of hybrid CNN and classical-ML pipelines for breast cancer detection against single-model baselines.
+
+## The problem
+
+Deep models learn strong features from imaging data but need volume to do it, and medical datasets are small. Classical models handle small data well but depend on features somebody has to design by hand.
+
+## Approach
+
+Use each for what it is good at: a convolutional network as a learned feature extractor, and a classical classifier on top of those features. The paper benchmarks several combinations against end-to-end CNNs and against classical models trained on hand-designed features.
+
+## Findings
+
+The hybrid configurations outperformed both baselines on the evaluated datasets. The paper also catalogues the failure modes that survive — class imbalance, inter-dataset variation, and the interpretability gap that keeps these systems assistive rather than autonomous.
+
+## Tech stack
+
+<TechStack items={["Python", "PyTorch"]} />

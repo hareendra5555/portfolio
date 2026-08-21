@@ -1,0 +1,37 @@
+---
+slug: uf-health
+---
+
+## Highlights
+
+- Architected a FastAPI async REST backend on Pydantic and the SQLAlchemy async ORM, serving real-time clinical data across 6 departments. Average API response fell from 4.1s to 900ms — **78%** — for 1,000+ daily users.
+- Built a JWT/OAuth2 auth layer with refresh-token rotation and role-based access across 4 services, cutting auth support tickets **40%**.
+- Designed a Celery and Redis task queue to offload lab-result and discharge jobs, reducing synchronous API wait time **65%** under peak load.
+- Optimized PostgreSQL on 5M+ row tables through Alembic migrations and composite indexes, dropping p95 read latency from 3.8s to 680ms with zero downtime.
+- Containerized the stack with Docker and shipped to AWS EKS through GitHub Actions CI/CD with pytest gates — daily releases, zero deployment incidents over 3 months.
+
+## What the work looked like
+
+Clinical software has an unusual failure profile: the slow path is not merely annoying, it is a clinician standing in a room waiting. Most of the latency work was unglamorous — finding the endpoints that did N+1 queries against patient records, moving anything that touched an external system off the request path, and putting indexes where the query planner was guessing.
+
+The auth rewrite mattered for a different reason. Refresh-token rotation removed a class of support ticket entirely, because the common failure was not a security event but a session that expired mid-task.
+
+## Tech stack
+
+<TechStack
+  items={[
+    "Python",
+    "FastAPI",
+    "Pydantic",
+    "SQLAlchemy",
+    "Celery",
+    "Redis",
+    "PostgreSQL",
+    "Alembic",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "GitHub Actions",
+    "pytest",
+  ]}
+/>

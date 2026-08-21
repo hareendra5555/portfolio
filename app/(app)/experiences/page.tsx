@@ -1,0 +1,35 @@
+import { ExperiencesView } from "@/components/experience/view";
+import { Section } from "@/components/ui/section";
+import { Title } from "@/components/ui/title";
+import { ROUTES } from "@/constants/routes";
+import { getExperiences } from "@/lib/experiences";
+import { BreadcrumbJsonLd, experiencesBreadcrumbs } from "@/seo/json-ld";
+import { createMetadata } from "@/seo/metadata";
+
+const DESCRIPTION = "Where I have worked and what I shipped.";
+
+export const metadata = createMetadata({
+  canonical: ROUTES.EXPERIENCES,
+  description: DESCRIPTION,
+  title: "Experience",
+});
+
+const ExperiencesPage = () => {
+  const experiences = getExperiences();
+
+  return (
+    <>
+      <BreadcrumbJsonLd items={experiencesBreadcrumbs()} />
+      <div className="animate-slide-in space-y-2 px-4 pt-6 pb-2">
+        <Title className="text-xl font-medium italic">{"experience."}</Title>
+
+        <p className="text-muted-foreground text-sm">{DESCRIPTION}</p>
+      </div>
+      <Section className="delay-100 flex flex-col py-2">
+        <ExperiencesView showHeader={false} experiences={experiences} />
+      </Section>
+    </>
+  );
+};
+
+export default ExperiencesPage;

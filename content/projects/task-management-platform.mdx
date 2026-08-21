@@ -1,0 +1,31 @@
+---
+slug: task-management-platform
+---
+
+## Overview
+
+A polyglot task platform: an ASP.NET Core service owning the task domain, a FastAPI service handling notifications and scheduling, a React dashboard on top, and an event bus in the middle.
+
+## The problem
+
+Task systems die by notification. Either every change emails everyone, or the notification path is coupled so tightly to the write path that a slow SMTP handshake blocks the API response.
+
+## Approach
+
+Writes are synchronous and fast; notifications are not. The task service publishes domain events and returns. A separate FastAPI worker consumes them, applies per-user batching rules, and delivers — so a notification backlog degrades delivery latency instead of write latency.
+
+Redis fronts the read-heavy dashboard queries, with cache keys scoped per project so an update invalidates one project view rather than the whole cache.
+
+## Wins
+
+- Notification delivery fully decoupled from the request path.
+- Dashboard reads served from cache on the common path.
+- Two services in two languages behind one API surface, with the boundary drawn at the event bus rather than at shared tables.
+
+## Tech stack
+
+<TechStack items={["ASP.NET Core", "FastAPI", "Python", "React", "Redis", "AWS", "Docker"]} />
+
+## What is next
+
+Replacing the polling worker with a proper queue consumer, and adding delivery receipts so retries are idempotent.

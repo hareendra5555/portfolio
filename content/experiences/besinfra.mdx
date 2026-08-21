@@ -1,0 +1,35 @@
+---
+slug: besinfra
+---
+
+## Highlights
+
+- Built a client project-management portal with React, Redux and Node/Express — JWT auth, S3 uploads — cutting onboarding from 5 days to 1 (**80%**) across 3 teams.
+- Architected a Node/Express API gateway consolidating 4 microservices behind MongoDB aggregation pipelines, cutting frontend API calls **60%**.
+- Diagnosed slow reporting on a 2M+ document MongoDB collection. Compound indexes and `$lookup` rewrites cut report load from 5.8s to 1.2s (**79%**).
+- Refactored a high-traffic React data grid with virtualization and memoization, lifting the Lighthouse score from 54 to 89.
+- Instrumented services with Prometheus and Grafana, catching 2 memory-leak incidents before they breached SLAs.
+
+## What the work looked like
+
+The gateway was the piece that changed how the frontend was written. Four services meant four round trips per screen, and the client was doing the joins. Moving those joins into aggregation pipelines behind one endpoint cut the call count by more than half and made the dashboard code boring, which was the point.
+
+The reporting fix was a lesson in reading query plans rather than guessing: the 5.8s was not the data volume, it was a `$lookup` running unindexed on the foreign field.
+
+## Tech stack
+
+<TechStack
+  items={[
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Redux",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "AWS",
+    "Prometheus",
+    "Grafana",
+  ]}
+/>

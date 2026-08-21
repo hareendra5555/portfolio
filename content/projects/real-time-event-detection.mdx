@@ -1,0 +1,23 @@
+---
+slug: real-time-event-detection
+---
+
+## Overview
+
+Published in IJRASET, August 2023. A streaming approach to spotting emergent events in social media before anyone has labelled them as events.
+
+## The problem
+
+Batch topic modelling finds what happened yesterday. Detecting a breaking event means committing to a cluster while the evidence is still thin — and the cost of waiting for confidence is that the detection is no longer useful.
+
+## Approach
+
+Posts are embedded and assigned to incrementally maintained clusters. A burst detector watches per-cluster arrival rate against that cluster own recent baseline, so a cluster is promoted to an event on acceleration rather than on absolute volume. That keeps small, fast-moving events visible next to large, steady ones.
+
+## Findings
+
+The system trades a modest amount of precision for a substantial reduction in detection latency. For monitoring use cases that trade is favourable: a false positive costs an analyst a glance, a missed event costs the whole point of the system.
+
+## Tech stack
+
+<TechStack items={["Python", "SQL"]} />

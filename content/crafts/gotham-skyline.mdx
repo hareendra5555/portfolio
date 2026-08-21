@@ -1,0 +1,21 @@
+---
+slug: gotham-skyline
+---
+
+## Overview
+
+An entire city scene — tower setbacks, hundreds of lit windows, a cathedral, a searchlight beam — drawn as a single SVG `<path>`.
+
+## Approach
+
+The trick is `fill-rule="evenodd"`. Every window is a sub-path inside the same path element, and because it sits within the building outline, evenodd punches it out as a hole rather than painting it. So one path holds both the solid and the negative space, and the whole scene inherits `currentColor` in one place.
+
+Buildings are stacked rectangles with decreasing widths, which produces the setback profile of 1930s towers without any curve data. The searchlight is three overlapping triangles at slightly different angles, so the beam edges read as soft without a gradient.
+
+## Tech stack
+
+<TechStack items={["SVG", "CSS"]} />
+
+## Notes
+
+Each scene lives in a `<symbol>` and gets instanced with `<use>`, so a page can place the same skyline at five sizes for the cost of one definition.
