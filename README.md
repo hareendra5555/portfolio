@@ -110,5 +110,14 @@ Two things are fetched while building and snapshotted into the HTML:
 - The GitHub contribution graph, from `github-contributions-api.jogruber.de`.
 - Link hover previews, scraped from each outbound URL.
 
-Both degrade to empty on failure rather than breaking the build. Set
+- The LeetCode streak, solved counts and rank, from `leetcode.com/graphql`.
+
+All three degrade to empty/null on failure rather than breaking the build, and
+the LeetCode card hides itself entirely if the fetch failed. Set
 `SKIP_LINK_PREVIEWS=1` for a faster or offline build.
+
+Because these are baked in at build time, `deploy.yml` also runs on a daily
+cron (06:17 UTC) so the numbers do not freeze. Two caveats worth knowing:
+GitHub disables scheduled workflows on a repo with no pushes for 60 days, and
+cron runs are best-effort — they can be delayed under load. The streak is
+therefore accurate as of the last successful build, not live.

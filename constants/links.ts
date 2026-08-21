@@ -1,3 +1,7 @@
+export const LEETCODE = {
+  username: "hareendra21",
+} as const;
+
 export const GITHUB = {
   branch: "main",
   repo: "portfolio",
@@ -14,7 +18,7 @@ export const LINK = {
   EMAIL: "hareendra05@gmail.com",
   GITHUB: GITHUB_URL,
   GITHUB_REPO: `https://github.com/${GITHUB.user}/${GITHUB.repo}`,
-  LEETCODE: "https://leetcode.com/u/hareendra21/",
+  LEETCODE: `https://leetcode.com/u/${LEETCODE.username}/`,
   LICENSE: `https://github.com/${GITHUB.user}/${GITHUB.repo}/blob/${GITHUB.branch}/LICENSE`,
   LINKEDIN: "https://www.linkedin.com/in/hareendrasrinag/",
   RESUME:
