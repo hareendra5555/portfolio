@@ -105,7 +105,8 @@ const baseMetadata: Metadata = {
     icon: [
       {
         sizes: "32x32",
-        url: asset("/favicon.ico"),
+        type: "image/png",
+        url: asset("/favicon-32x32.png"),
       },
       {
         sizes: "any",
