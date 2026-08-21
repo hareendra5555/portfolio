@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AppLink } from "@/components/ui/app-link";
 import type { GlimpseData } from "@/components/ui/glimpse/types";
 import { Title } from "@/components/ui/title";
-import { TechStack } from "@/components/uses/tech-stack";
+import { TechStack } from "@/components/skills/tech-stack";
 import { ROUTES } from "@/constants/routes";
 import { trackExperienceDetailClick } from "@/lib/events";
 import { cn } from "@/lib/utils";

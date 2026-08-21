@@ -9,7 +9,7 @@ export const USER = {
     country: "USA",
     locality: "Gainesville, FL",
   },
-  avatar: asset("/avatar.svg"),
+  avatar: asset("/profile.jpg"),
   company: currentExperience.experienceOrg.name,
   email: LINK.EMAIL,
   firstName: "Hareendra",

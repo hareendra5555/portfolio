@@ -4,28 +4,26 @@ slug: gatorides
 
 ## Overview
 
-A ride-sharing backend for a campus-sized area: riders post where they are going, drivers see nearby requests appear without refreshing, and both sides watch the match move on a map.
+A ride-sharing platform for urban commutes, built by a four-person team as a software engineering project at UF. Riders post where they need to be picked up, drivers advertise availability, and the same account can do both.
+
+**My role: backend.** I worked on the Go services with Shahid Shareef Mohammad, while Dhanush Kumar Reddy Gujjula and Venkata Sandeep Macha built the frontend.
 
 ## The problem
 
-Ride matching is a geospatial query over a moving dataset. Naive implementations re-scan every open request on every location ping, which is fine at ten users and quadratic pain at a thousand.
+The interesting constraint is that there is no fixed role. A user is a rider on Monday and a driver on Tuesday, so the data model cannot hang permissions off an account type — it has to treat rider and driver as things an account *does*, not things it *is*.
 
-## Approach
+Matching is the other half: finding drivers heading roughly the same way as a rider, close enough to be worth the detour.
 
-The Go backend is deliberately stateless — any instance can serve any request, so scaling is a replica count. Open rides live in MongoDB behind a `2dsphere` index, which turns "drivers within 3km" into an index seek rather than a collection scan.
+## What the backend does
 
-Live position updates travel over WebSockets fanned out through Redis pub/sub, so a driver location reaches every subscriber watching that ride without instances needing to know about each other.
+Auth and session handling, the ride lifecycle — request, match, accept, complete — the route-matching logic that pairs riders with drivers on compatible routes, and the ratings API that both sides write to after a trip.
 
-## Wins
-
-- **30% lower match latency** versus the initial scan-based implementation.
-- Sub-200ms location updates end to end.
-- 100+ concurrent connections held on a single instance under load testing.
+Controllers are covered by table-driven tests under `tests/controllers`, run with `go test ./tests/controllers -v`.
 
 ## Tech stack
 
-<TechStack items={["Go", "MongoDB", "Redis", "WebSocket", "Docker"]} />
+<TechStack items={["Go", "MongoDB", "JavaScript", "React"]} />
 
-## What is next
+## Notes
 
-Driver-side route batching, so one driver can accept two compatible requests without either rider ETA collapsing.
+The goal behind the project was congestion and commute cost — fewer single-occupancy cars making the same trip. Mutual participation is what makes that work: a platform where drivers are also riders has a much better chance of route overlap than one with two separate populations.

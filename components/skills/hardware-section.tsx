@@ -46,7 +46,7 @@ const HardwareRow = ({
         rel="noopener noreferrer"
         onClick={() =>
           trackExternalLinkClick({
-            context: "uses",
+            context: "skills",
             link_type: "hardware",
             title,
             url: href,
@@ -80,7 +80,7 @@ const HardwareRow = ({
         rel="noopener noreferrer"
         onClick={() =>
           trackExternalLinkClick({
-            context: "uses",
+            context: "skills",
             link_type: "hardware",
             title,
             url: href,

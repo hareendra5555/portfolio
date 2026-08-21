@@ -9,7 +9,7 @@ const baseUrl = getBaseUrl();
 
 export const SITE = {
   AUTHOR: {
-    AVATAR: asset("/avatar.svg"),
+    AVATAR: asset("/profile.jpg"),
     FULL_NAME,
     NAME,
   },
@@ -79,9 +79,9 @@ export const NAV_GROUPS: NavGroup[] = [
         label: "crafts",
       },
       {
-        href: ROUTES.USES,
-        id: "uses",
-        label: "uses",
+        href: ROUTES.SKILLS,
+        id: "skills",
+        label: "skills",
       },
     ],
     label: "work",

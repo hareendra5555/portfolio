@@ -4,28 +4,32 @@ slug: documind
 
 ## Overview
 
-Documind answers questions against a private document corpus — 50,000+ indexed pages — and shows its work. Every answer carries the passages it was built from, so a wrong answer is diagnosable instead of mysterious.
+DocuMind is a retrieval-augmented Q&A engine for large document collections. You upload documents, it chunks and embeds them, and then answers questions against the corpus with the retrieved passages behind every answer.
 
 ## The problem
 
-A single-shot RAG pipeline retrieves once and hopes the top-k chunks contain the answer. For anything that spans documents — "which of these contracts renew before Q3, and what changed in each?" — one retrieval pass is not enough, and the model fills the gap by inventing.
+An LLM asked about documents it has never seen will answer anyway. The fix is not a better prompt — it is making sure the model only ever sees text that actually exists in the corpus, and making the retrieval step good enough that the right text is in the window.
 
-## Approach
+## Architecture
 
-The pipeline is a LangGraph state machine rather than a chain. A planner decides whether the question needs decomposition; each sub-question runs its own retrieval against pgvector; a grader scores the retrieved passages and can send the graph back for another pass before synthesis is allowed to start.
+The API surface splits into three: documents, query, and conversations. Behind them sits a service layer with two halves.
 
-Answers stream out of FastAPI over server-sent events, so the first tokens land while later sub-questions are still resolving.
+The **document processor** handles ingestion — parsing, chunking, and handing chunks to the embedding service, which writes vectors into `doc_chunks` in PostgreSQL via pgvector.
+
+The **RAG pipeline** handles reads: vector search over those chunks, a memory service that carries conversation state across turns, and GPT-4o for synthesis. Answers stream back over SSE, so tokens land as they are produced rather than after the full generation.
+
+Nginx sits in front as a reverse proxy. Postgres holds `documents`, `doc_chunks` and `conversations` + `messages` in one database, so a conversation and the chunks it cited stay joinable.
 
 ## Wins
 
-- **40% fewer hallucinations** against a held-out question set, measured by manual grading of cited-vs-claimed spans.
-- 99.5% uptime across the deployment window on a single AWS EC2 instance behind Docker.
-- Retrieval grading catches empty-context cases and returns "not in the corpus" instead of guessing.
+- Conversation memory means follow-up questions resolve against earlier turns instead of starting cold.
+- Streaming over SSE removes the dead wait between question and first token.
+- One Postgres instance for both relational data and vectors — no separate vector database to operate.
 
 ## Tech stack
 
-<TechStack items={["Python", "LangGraph", "LangChain", "FastAPI", "pgvector", "PostgreSQL", "Docker", "AWS"]} />
+<TechStack items={["Python", "FastAPI", "LangChain", "pgvector", "PostgreSQL", "Docker", "AWS"]} />
 
 ## What is next
 
-Swapping the flat chunk index for a hierarchical one, so document-level structure survives retrieval instead of being flattened away.
+Hierarchical chunking, so document structure survives retrieval instead of being flattened into a bag of passages.

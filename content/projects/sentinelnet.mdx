@@ -1,0 +1,35 @@
+---
+slug: sentinelnet
+---
+
+## Overview
+
+SentinelNet scores card transactions for fraud in real time. A PyTorch MLP trained on over a million transactions, served behind a Django REST endpoint, containerized, and deployable to AWS Lambda.
+
+## Results
+
+| Metric | Score |
+| --- | --- |
+| F1 (fraud class) | **0.964** |
+| AUC-ROC | **0.991** |
+| p99 latency | **&lt;80ms** |
+
+## The problem
+
+Fraud detection is a severe class-imbalance problem — genuine fraud is a rounding error in the transaction stream. Optimize for raw accuracy and you get a model that predicts "legitimate" every time and scores 99.8%.
+
+It is also a latency problem. A fraud score is only useful inside the authorization window, so an accurate model that takes half a second is not deployable.
+
+## Approach
+
+**Imbalance** is handled in preprocessing: `StandardScaler` for feature normalization, then SMOTE to synthesize minority-class examples up to a 10% ratio. Not to parity — oversampling all the way to balanced teaches the model that fraud is common, which wrecks precision in production. F1 on the fraud class is the metric that matters here, not accuracy.
+
+**Latency** is handled at the serving boundary. `POST /api/v1/predict/` hits `detection/views.py`, which delegates to `inference.py`. The model is a singleton loaded once at process start, so no request pays deserialization cost — that is most of what keeps p99 under 80ms.
+
+## Tech stack
+
+<TechStack items={["Python", "PyTorch", "Django", "Docker", "AWS Lambda"]} />
+
+## What is next
+
+Adaptive thresholding — the score cutoff should shift with the current fraud base rate rather than sitting at a constant tuned once on the training distribution.

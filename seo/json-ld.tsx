@@ -142,9 +142,9 @@ const experiencesBreadcrumbs = (current?: BreadcrumbItem): BreadcrumbItem[] => [
   ...(current ? [current] : []),
 ];
 
-const usesBreadcrumbs = (current?: BreadcrumbItem): BreadcrumbItem[] => [
+const skillsBreadcrumbs = (current?: BreadcrumbItem): BreadcrumbItem[] => [
   HOME_BREADCRUMB,
-  { name: "Uses", path: ROUTES.USES },
+  { name: "Skills", path: ROUTES.SKILLS },
   ...(current ? [current] : []),
 ];
 
@@ -180,7 +180,7 @@ export {
   JsonLdScripts,
   PersonJsonLd,
   projectsBreadcrumbs,
-  usesBreadcrumbs,
+  skillsBreadcrumbs,
   WebsiteJsonLd,
 };
 export type { BreadcrumbItem };

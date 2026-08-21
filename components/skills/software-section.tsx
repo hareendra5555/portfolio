@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CopyLink } from "@/components/copy-link";
 import { Section } from "@/components/ui/section";
 import { Title } from "@/components/ui/title";
+import { ViewAllButton } from "@/components/view-all-button";
 import { ViewToggle } from "@/components/view-tabs";
 import { SOFTWARE_ITEMS } from "@/constants/software";
 import type { SoftwareItem } from "@/constants/software";
@@ -25,20 +26,39 @@ const groupByCategory = (
   return grouped;
 };
 
-const SoftwareSection = () => {
+interface SoftwareSectionProps {
+  /** Heading text. The home page shows this list as "skills." */
+  title?: string;
+  copyTitle?: string;
+  sectionId?: string;
+  /** When set, a "View all" button links to the full page. */
+  viewAllHref?: string;
+  className?: string;
+}
+
+const SoftwareSection = ({
+  title = "software.",
+  copyTitle = "Software",
+  sectionId = "stack",
+  viewAllHref,
+  className,
+}: SoftwareSectionProps) => {
   const [variant, setVariant] = useState<Variant>("list");
   const grouped = groupByCategory(SOFTWARE_ITEMS);
 
   return (
-    <Section id="stack" className="delay-200 flex flex-col gap-4">
+    <Section
+      id={sectionId}
+      className={cn("delay-200 flex flex-col gap-4", className)}
+    >
       <div className="flex items-center justify-between gap-4">
         <div className="group/stack flex flex-1 items-center gap-1">
           <Title
             className="text-xl font-medium italic"
-            render={<h2>{"software."}</h2>}
+            render={<h2>{title}</h2>}
           />
           <CopyLink
-            title={"Software"}
+            title={copyTitle}
             className="hidden group-hover/stack:inline-flex"
           />
         </div>
@@ -63,6 +83,10 @@ const SoftwareSection = () => {
           />
         ))}
       </div>
+
+      {viewAllHref ? (
+        <ViewAllButton href={viewAllHref} eventName="stack" className="mx-auto" />
+      ) : null}
     </Section>
   );
 };

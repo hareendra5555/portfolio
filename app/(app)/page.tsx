@@ -5,6 +5,7 @@ import { EducationSection } from "@/components/education/section";
 import { ExperienceSection } from "@/components/experience/section";
 import { ProjectSection } from "@/components/project/section";
 import { PublicationSection } from "@/components/publications/section";
+import { SoftwareSection } from "@/components/skills/software-section";
 import { ROUTES } from "@/constants/routes";
 import { BreadcrumbJsonLd } from "@/seo/json-ld";
 
@@ -15,8 +16,15 @@ const MainView = () => (
     <ProjectSection />
     <CraftSection />
     <ExperienceSection />
-    <EducationSection className="delay-500" />
-    <PublicationSection className="delay-600" />
+    <SoftwareSection
+      title="skills."
+      copyTitle="Skills"
+      sectionId="skills"
+      viewAllHref={ROUTES.SKILLS}
+      className="delay-500"
+    />
+    <EducationSection className="delay-600" />
+    <PublicationSection className="delay-700" />
     <ContactSection className="delay-700" />
   </>
 );

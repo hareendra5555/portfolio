@@ -1,5 +1,6 @@
 import { Icons } from "@/components/icons";
 import { LINK } from "@/constants/links";
+import { SITE } from "@/constants/site";
 import type {
   Project,
   ProjectSource,
@@ -10,7 +11,7 @@ export const HOME_FEATURED_PROJECT_COUNT = 4 as const;
 
 export const PROJECT_SOURCES = [
   {
-    icon: Icons.logo,
+    image: SITE.AUTHOR.AVATAR,
     label: "Personal",
     value: "personal",
   },
@@ -31,26 +32,58 @@ export const PROJECTS = [
       year: 2026,
     },
     description:
-      "Intelligent document Q&A — a LangGraph multi-step RAG pipeline with pgvector embeddings and FastAPI streaming, cutting hallucinations 40% across 50K+ indexed pages.",
+      "Q&A over large document collections — LangChain embeddings into pgvector, GPT-4o synthesis, and FastAPI streaming answers over SSE behind Nginx.",
     featured: true,
     links: {
-      github: `${LINK.GITHUB}?tab=repositories`,
+      github: `${LINK.GITHUB}/documind`,
     },
     slug: "documind",
     source: "personal",
-    title: "Documind",
+    title: "DocuMind",
+  },
+  {
+    category: "Machine Learning",
+    date: {
+      month: "April",
+      year: 2026,
+    },
+    description:
+      "Real-time credit card fraud detection — a PyTorch MLP trained on 1M+ transactions, served through Django REST and deployable to AWS Lambda. F1 0.964, AUC-ROC 0.991, sub-80ms p99.",
+    featured: true,
+    links: {
+      github: `${LINK.GITHUB}/SentinelNet_Fraud_Detection_System`,
+    },
+    slug: "sentinelnet",
+    source: "personal",
+    title: "SentinelNet",
   },
   {
     category: "Platform",
     date: {
-      month: "November",
+      month: "March",
+      year: 2026,
+    },
+    description:
+      "A distributed job scheduler — Spring Boot over Redis priority sorted sets with SQS persistence, a worker pool with exponential backoff, and a React dashboard on STOMP WebSockets.",
+    featured: true,
+    links: {
+      github: `${LINK.GITHUB}/smartqueue`,
+    },
+    slug: "smartqueue",
+    source: "personal",
+    title: "SmartQueue",
+  },
+  {
+    category: "Platform",
+    date: {
+      month: "April",
       year: 2025,
     },
     description:
-      "Real-time ride-sharing for campus — a stateless Go backend with geospatial MongoDB indexes and Redis pub/sub WebSocket push, holding sub-200ms location updates.",
+      "A campus ride-sharing platform built by a four-person team. I worked on the Go backend — auth, ride matching, and the ratings API.",
     featured: true,
     links: {
-      github: `${LINK.GITHUB}?tab=repositories`,
+      github: "https://github.com/DhanushUF18/SE_GatoRides",
     },
     slug: "gatorides",
     source: "personal",
@@ -64,10 +97,8 @@ export const PROJECTS = [
     },
     description:
       "API, dashboard and notifications spanning ASP.NET Core and FastAPI services, a React dashboard, Redis caching, and AWS-backed event-driven delivery.",
-    featured: true,
-    links: {
-      github: `${LINK.GITHUB}?tab=repositories`,
-    },
+    featured: false,
+    links: {},
     slug: "task-management-platform",
     source: "personal",
     title: "Task Management Platform",
@@ -80,10 +111,8 @@ export const PROJECTS = [
     },
     description:
       "An ML inference pipeline for medical imaging using PyTorch and FastAPI, with versioned datasets and model artifacts stored in AWS S3.",
-    featured: true,
-    links: {
-      github: `${LINK.GITHUB}?tab=repositories`,
-    },
+    featured: false,
+    links: {},
     slug: "medical-imaging-prediction",
     source: "personal",
     title: "Medical Imaging Prediction",
@@ -112,7 +141,7 @@ export const PROJECTS = [
     },
     description:
       "Streaming pipeline that clusters social posts into emergent events in near real time, published in IJRASET.",
-    featured: false,
+    featured: true,
     links: {
       post: "https://www.ijraset.com/research-paper/real-time-event-detection-in-social-media-streams",
       website:
@@ -129,8 +158,8 @@ export const PROJECTS = [
       year: 2023,
     },
     description:
-      "Hybrid CNN + classical-ML models for breast cancer detection, benchmarked against single-model baselines. Published in IJSREM.",
-    featured: false,
+      "Hybrid CNN and classical-ML models for breast cancer detection, benchmarked against single-model baselines. Published in IJSREM.",
+    featured: true,
     links: {
       post: "https://ijsrem.com/download/a-novel-approaches-of-detecting-breast-cancer-with-hybrid-models-techniques-and-challenges/",
       website:
