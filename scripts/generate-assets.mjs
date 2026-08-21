@@ -17,7 +17,7 @@ const publicDir = path.join(root, "public");
 const NAME = "Hareendra Nerusu";
 const ROLE = "Software Engineer";
 const TAGLINE = "Backend · Cloud · Agentic AI";
-const URL_LABEL = "hareendra5555.github.io/portfolio_aug_2026";
+const URL_LABEL = "hareendra5555.github.io/portfolio";
 
 /** Geist ships with the repo, so the card renders identically everywhere. */
 const embedFont = async () => {

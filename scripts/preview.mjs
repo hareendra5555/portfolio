@@ -1,6 +1,6 @@
 // Serves ./out under the deploy base path, the way GitHub Pages will.
 //
-//   npm start        → http://localhost:4321/portfolio_aug_2026
+//   npm start        → http://localhost:4321/portfolio
 //
 // `npx serve out` would mount the export at "/", where every basePath-prefixed
 // asset 404s — which looks like a broken build but is only a wrong mount point.
@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = path.join(root, "out");
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/portfolio_aug_2026";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/portfolio";
 const port = Number(process.env.PORT ?? 4321);
 
 const TYPES = {

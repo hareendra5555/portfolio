@@ -3,7 +3,7 @@ import { createContent } from "fuma-content/next";
 // GitHub Pages serves project sites from /<repo>, so every asset and route has
 // to be prefixed. Set NEXT_PUBLIC_BASE_PATH="" when deploying to a user site
 // (<user>.github.io) or a custom domain.
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/portfolio_aug_2026";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/portfolio";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
