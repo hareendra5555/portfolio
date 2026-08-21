@@ -38,3 +38,8 @@ next-env.d.ts
 
 # fuma-content generated output
 .content
+
+# profile photo sources (public/profile.jpg is the committed asset)
+/WhatsApp Image*
+/new-profile.*
+/profile-preview.png
