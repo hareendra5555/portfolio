@@ -53,14 +53,6 @@ const ogSvg = (fontFace) => `
   <rect width="1200" height="630" fill="#ffffff"/>
   <rect x="0" y="0" width="1200" height="8" fill="#0a0a0b"/>
 
-  <!-- monogram -->
-  <rect x="88" y="88" width="112" height="112" rx="26" fill="#0a0a0b"/>
-  <g fill="none" stroke="#f4f4f5" stroke-width="4.5" stroke-linecap="square"
-     transform="translate(88 88) scale(1.75)">
-    <path d="M15 21v22M30 21v22M15 32h15"/>
-    <path d="M38 43V21l11 22V21"/>
-  </g>
-
   <text class="name" x="88" y="330">${NAME}</text>
   <text class="role" x="88" y="392">${ROLE}</text>
   <text class="tag"  x="88" y="452">${TAGLINE}</text>
@@ -69,6 +61,19 @@ const ogSvg = (fontFace) => `
   <text class="url" x="88" y="566">${URL_LABEL}</text>
 </svg>
 `;
+
+/** Circular crop of the profile photo, for the card's portrait. */
+const circularPortrait = async (size) => {
+  const mask = Buffer.from(
+    `<svg width="${size}" height="${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="#fff"/></svg>`
+  );
+
+  return await sharp(path.join(publicDir, "profile.jpg"))
+    .resize(size, size, { fit: "cover" })
+    .composite([{ input: mask, blend: "dest-in" }])
+    .png()
+    .toBuffer();
+};
 
 const iconSvg = await readFile(path.join(publicDir, "favicon.svg"));
 
@@ -88,8 +93,15 @@ for (const { name, size } of pngTargets) {
   console.log(`wrote public/${name}`);
 }
 
+const PORTRAIT_SIZE = 150;
 const fontFace = await embedFont();
-const og = await sharp(Buffer.from(ogSvg(fontFace)), { density: 96 })
+const card = await sharp(Buffer.from(ogSvg(fontFace)), { density: 96 })
+  .png()
+  .toBuffer();
+const og = await sharp(card)
+  .composite([
+    { input: await circularPortrait(PORTRAIT_SIZE), left: 88, top: 88 },
+  ])
   .png()
   .toBuffer();
 await writeFile(path.join(publicDir, "og.png"), og);

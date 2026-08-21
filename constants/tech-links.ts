@@ -1,4 +1,11 @@
 export const TECH_LINKS = {
+  "AWS Lambda": "https://aws.amazon.com/lambda/",
+  "AWS SQS": "https://aws.amazon.com/sqs/",
+  Django: "https://www.djangoproject.com/",
+  "Spring Boot": "https://spring.io/projects/spring-boot",
+  SVG: "https://developer.mozilla.org/en-US/docs/Web/SVG",
+  CSS: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+  Motion: "https://motion.dev/",
   "ASP.NET Core": "https://dotnet.microsoft.com/apps/aspnet",
   Alembic: "https://alembic.sqlalchemy.org/",
   AWS: "https://aws.amazon.com/",

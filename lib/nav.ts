@@ -7,7 +7,7 @@ const SECTION_ROUTES: { id: SectionId; route: string }[] = [
   { id: "projects", route: ROUTES.PROJECTS },
   { id: "crafts", route: ROUTES.CRAFTS },
   { id: "experiences", route: ROUTES.EXPERIENCES },
-  { id: "uses", route: ROUTES.USES },
+  { id: "skills", route: ROUTES.SKILLS },
 ];
 
 export const isNavGroupActive = (

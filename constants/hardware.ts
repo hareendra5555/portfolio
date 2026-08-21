@@ -5,7 +5,7 @@ export interface HardwareItem {
   href: string;
 }
 
-// Nothing here yet — the `hardware.` block on /uses hides itself while this
+// Nothing here yet — the `hardware.` block on /skills hides itself while this
 // list is empty. Add your own machine, display and peripherals, e.g.:
 //
 // {

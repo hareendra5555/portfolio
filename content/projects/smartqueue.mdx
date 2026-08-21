@@ -1,0 +1,33 @@
+---
+slug: smartqueue
+---
+
+## Overview
+
+SmartQueue is a distributed job scheduler: submit work over REST, watch it move through the queue live in a React dashboard, and have it survive a backend restart.
+
+## The problem
+
+An in-memory job queue is about twenty lines of code and loses everything the moment the process dies. A durable queue that is also fast is the harder version — you want the hot path in memory and the durability somewhere that outlives the JVM.
+
+Priority is the second half. A queue that is strictly FIFO makes urgent work wait behind a backlog of batch jobs.
+
+## Architecture
+
+**Redis holds the live queue.** Jobs sit in sorted sets — four priority lanes — so dequeue is a range read on the highest non-empty lane rather than a scan. Priority is structural, not a field somebody filters on.
+
+**SQS holds durability.** Redis is the working set; SQS is the record that survives a restart, which keeps the fast path fast without making the queue ephemeral.
+
+**A `JobWorkerPool` of ten threads** drains the lanes. Failures retry with exponential backoff rather than hammering a dependency that is already unhappy.
+
+**`JobExecutorRegistry`** makes job types pluggable — a new kind of job is a registered handler, not a change to the orchestrator.
+
+**The dashboard** talks REST for CRUD and STOMP over WebSocket for live state, so job transitions push to the browser instead of being polled. Prometheus scrapes `/actuator/prometheus`, with Grafana on top.
+
+## Tech stack
+
+<TechStack items={["Java", "Spring Boot", "Redis", "AWS SQS", "React", "WebSocket", "Docker", "Prometheus", "Grafana"]} />
+
+## What is next
+
+Scheduled and recurring jobs — cron-style triggers feeding the same lanes, so periodic work uses the retry and observability machinery already in place.

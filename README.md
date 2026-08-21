@@ -68,8 +68,8 @@ Almost everything is data, not markup:
 | Crafts | `constants/crafts.ts` + `content/crafts/<slug>.mdx` |
 | Degrees + certifications | `constants/education.ts` |
 | Papers | `constants/publications.ts` |
-| `/uses` software | `constants/software.tsx` |
-| `/uses` hardware | `constants/hardware.ts` (empty — the section hides itself) |
+| Skills / software | `constants/software.tsx` |
+| `/skills` hardware | `constants/hardware.ts` (empty — the section hides itself) |
 | Hero copy | `components/about/section.tsx` |
 
 A slug in `constants/projects.ts` must have a matching
@@ -78,8 +78,9 @@ crafts.
 
 ### Brand assets
 
-`public/favicon.svg` and `public/avatar.svg` are the sources of truth. After
-editing either, regenerate the raster derivatives and the Open Graph card:
+`public/favicon.svg` (the HN mark) and `public/profile.jpg` (the portrait) are
+the sources of truth. After replacing either, regenerate the raster derivatives
+and the Open Graph card:
 
 ```bash
 node scripts/generate-assets.mjs
@@ -93,6 +94,7 @@ Things that need a server, an analytics vendor, or content I do not have:
 
 - `/og` and `/vcard` route handlers → replaced by a committed `public/og.png`.
 - `/stats` (Clarity + token analytics) and `/favorites`.
+- Upstream's `/uses` is `/skills` here, and its list also appears on the home page.
 - The shadcn component registry (`registry/`, `public/r/`).
 - Microsoft Clarity. `lib/events.ts` keeps the full event taxonomy but drops
   every call on the floor — wire a provider in `trackEvent` to start collecting.

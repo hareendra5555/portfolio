@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ROUTES.PROJECTS,
     ROUTES.CRAFTS,
     ROUTES.EXPERIENCES,
-    ROUTES.USES,
+    ROUTES.SKILLS,
     ROUTES.CONTACT,
   ].map((route) => ({
     changeFrequency: "monthly" as const,
