@@ -1,12 +1,29 @@
+"use client";
+
+import { format } from "date-fns";
 import { FlameIcon } from "lucide-react";
 
 import { Icons } from "@/components/icons";
 import { AppLink } from "@/components/ui/app-link";
 import { Callout } from "@/components/ui/callout";
 import { Metric, MetricLabel, MetricValue } from "@/components/ui/metric";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { LINK } from "@/constants/links";
 import type { LeetCodeStats } from "@/lib/leetcode/stats";
 import { cn } from "@/lib/utils";
+
+import {
+  ContributionGraph,
+  ContributionGraphBlock,
+  ContributionGraphCalendar,
+  ContributionGraphFooter,
+  ContributionGraphLegend,
+  ContributionGraphTotalCount,
+} from "./contribution-graph";
 
 const nf = new Intl.NumberFormat("en-US");
 
@@ -24,7 +41,7 @@ const LeetCodeCard = ({
     return null;
   }
 
-  const { solved, streak, totalActiveDays, ranking } = stats;
+  const { solved, streak, totalActiveDays, ranking, calendar } = stats;
   const byDifficulty = [solved.easy, solved.medium, solved.hard];
 
   return (
@@ -50,6 +67,52 @@ const LeetCodeCard = ({
           Profile
         </AppLink>
       </div>
+
+      {calendar.length > 0 && (
+        <ContributionGraph
+          className="px-1"
+          data={calendar}
+          blockSize={11}
+          blockMargin={3}
+          blockRadius={2}
+        >
+          <ContributionGraphCalendar
+            className="no-scrollbar"
+            title="LeetCode Submissions"
+          >
+            {({ activity, dayIndex, weekIndex }) => (
+              <Tooltip>
+                <TooltipTrigger render={<g />}>
+                  <ContributionGraphBlock
+                    activity={activity}
+                    dayIndex={dayIndex}
+                    weekIndex={weekIndex}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="font-sans">
+                  <p>
+                    {activity.count} submission
+                    {activity.count === 1 ? "" : "s"} on{" "}
+                    {format(new Date(activity.date), "dd.MM.yyyy")}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </ContributionGraphCalendar>
+
+          <ContributionGraphFooter>
+            <ContributionGraphTotalCount>
+              {({ totalCount, year }) => (
+                <div className="text-muted-foreground">
+                  {nf.format(totalCount)} submissions in {year}
+                </div>
+              )}
+            </ContributionGraphTotalCount>
+
+            <ContributionGraphLegend />
+          </ContributionGraphFooter>
+        </ContributionGraph>
+      )}
 
       <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         <Metric>
